@@ -80,3 +80,8 @@ npx eas update
 ## 📹 Demonstração em vídeo
 
 [Link para vídeo demonstrativo do aplicativo](https://drive.google.com/file/d/1zHEB0XLCcTMWuo8lfWwwyh4rzROLOlzZ/view?usp=drive_link)
+
+## 📲 Download da APK do projeto
+
+[Link para download do APK]([https://drive.google.com/file/d/1zHEB0XLCcTMWuo8lfWwwyh4rzROLOlzZ/view?usp=drive_link](https://drive.google.com/file/d/10slEzfe89aUNUiS-MLAyBcTboNdJOgls/view?usp=sharing))
+>OBS.: Teste apenas em Android.
