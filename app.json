@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "plugins": [
+      "expo-router"
+    ],
+    "name": "pokedex",
+    "slug": "pokedex",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a5792535-cf29-4e9b-85f7-6bc91d598b0c"
+      }
+    },
+    "android": {
+      "package": "com.silu_judy.pokedex"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a5792535-cf29-4e9b-85f7-6bc91d598b0c"
+    },
+    "ios": {}
+  }
+}
