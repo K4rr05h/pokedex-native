@@ -24,6 +24,7 @@
     "expo-status-bar": "~2.2.3",
     "lodash": "^4.17.21",
     "lottie-react-native": "^7.2.2",
+    "metro-react-native-babel-preset": "^0.77.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.1",
