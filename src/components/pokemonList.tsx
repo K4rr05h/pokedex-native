@@ -1,5 +1,6 @@
 import { FlatList, Text, StyleSheet, ActivityIndicator, View } from 'react-native';
 import PokemonCard from './pokemonCard';
+import { theme } from '../theme/theme';
 
 type Pokemon = {
   id: number;
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
     fontSize: 16,
-    color: '#999',
+    color: theme.colors.textLight,
   },
   loader: {
     marginVertical: 20,

@@ -71,7 +71,7 @@ export default function PokemonDetails({ nameOrId }: Props) {
             key={ability.name}
             style={[
               styles.habilityTag,
-              { backgroundColor: '#E0E0E0' },
+              { backgroundColor: theme.colors.card },
             ]}
           >
             {ability.name}
