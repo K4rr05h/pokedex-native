@@ -1,83 +1,44 @@
-import { FlatList, StyleSheet, Text, View, Image, TouchableOpacity } from "react-native"
-import { useEffect, useState } from "react"
-import {
-  getPokemonList,
-  getPokemonIdFromUrl,
-  PokemonListItem,
-  formatPokemonNumber
-} from "../src/services/pokemonService"
-import { useRouter } from "expo-router"
+import { View, ActivityIndicator, Text } from 'react-native';
+import { usePokemonContext } from '../src/contexts/pokemonContext';
+import PokemonList from '../src/components/pokemonList';
+import SearchBar from '../src/components/searchBar';
+import { useState, useEffect } from 'react';
+import { getPokemonDetails } from '../src/services/pokemonService';
 
-export default function Page() {
-  const [pokemons, setPokemons] = useState<PokemonListItem[]>([])
-  const [offset, setOffset] = useState(0)
-  const router = useRouter()
+export default function HomePage() {
+  const { pokemons, loadMorePokemons, loading } = usePokemonContext();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
 
   useEffect(() => {
-    async function load() {
-      try {
-        const data = await getPokemonList(20, offset)
-
-        setPokemons(prev => {
-          return offset === 0 ? data.results : [...prev, ...data.results]
-        })
-      } catch (error) {
-        console.error('Erro ao buscar pokémons:', error)
-      }
+    if (!searchTerm) {
+      setSearchResult(null);
+    } else {
+      searchPokemonByName(searchTerm);
     }
+  }, [searchTerm]);
 
-    load()
-  }, [offset])
+  async function searchPokemonByName(name: string) {
+    try {
+      const result = await getPokemonDetails(name.toLowerCase());
+      setSearchResult([result]);
+    } catch {
+      setSearchResult([]);
+    }
+  }
+
+  const listToShow = searchResult ?? pokemons;
 
   return (
-    <FlatList
-      data={pokemons}
-      keyExtractor={(item) => item.name}
-      renderItem={({ item }) => {
-        const id = getPokemonIdFromUrl(item.url)
-        const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
-        const formattedNumber = formatPokemonNumber(id)
-
-        return (
-          <TouchableOpacity onPress={() => router.push(`/${id}`)}>
-            <View style={styles.card}>
-              <Text style={styles.number}>{formattedNumber}</Text>
-              <Image source={{ uri: imageUrl }} style={styles.icon} />
-              <Text style={styles.name}>{item.name}</Text>
-            </View>
-          </TouchableOpacity>
-        )
-      }}
-      onEndReached={() => setOffset((prev) => prev + 20)}
-      onEndReachedThreshold={0.5}
-      contentContainerStyle={styles.list}
-    />
-  )
+    <View style={{ flex: 1 }}>
+      <SearchBar onSearch={setSearchTerm} />
+      {loading && pokemons.length === 0 ? (
+        <ActivityIndicator size="large" style={{ marginTop: 50 }} />
+      ) : searchResult?.length === 0 ? (
+        <Text style={{ textAlign: 'center', marginTop: 30 }}>Nenhum Pokémon encontrado.</Text>
+      ) : (
+        <PokemonList pokemons={listToShow} onEndReached={loadMorePokemons} loading={loading} />
+      )}
+    </View>
+  );
 }
-
-const styles = StyleSheet.create({
-  list: {
-    paddingVertical: 16,
-  },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-    backgroundColor: '#fff',
-  },
-  icon: {
-    width: 48,
-    height: 48,
-    marginRight: 12,
-  },
-  name: {
-    fontSize: 16,
-    textTransform: 'capitalize',
-  },
-  number: {
-    fontSize: 12,
-    color: '#666',
-  },
-})
