@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { getPokemonDetails } from '../services/pokemonService';
 import { theme } from '../theme/theme';
+import { sendMockNotification } from '../notifications/sendMockNotification'
 
 type Props = {
   nameOrId: string;
@@ -41,7 +42,7 @@ export default function PokemonDetails({ nameOrId }: Props) {
   if (loading) return <Text style={styles.loading}>Carregando...</Text>;
   if (!pokemon) return <Text style={styles.loading}>Pokémon não encontrado.</Text>;
 
-   const highResImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
+  const highResImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -55,7 +56,7 @@ export default function PokemonDetails({ nameOrId }: Props) {
             key={type.name}
             style={[
               styles.tag,
-              { backgroundColor: theme.colors.types[type.name as keyof typeof theme.colors.types] || '#ccc' },
+              { backgroundColor: theme.colors.types[type.name as keyof typeof theme.colors.types] || theme.colors.background },
             ]}
           >
             {type.name}
@@ -99,6 +100,7 @@ export default function PokemonDetails({ nameOrId }: Props) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     padding: 16,
     marginTop: 50,

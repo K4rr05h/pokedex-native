@@ -37,7 +37,6 @@ export default function PokemonCard({ pokemon }: Props) {
       const newStatus = !liked;
       setLiked(newStatus);
       await AsyncStorage.setItem(`liked-${pokemon.id}`, newStatus.toString());
-      Alert.alert(newStatus ? 'Curtido!' : 'Descurtido!');
     } catch (err) {
       console.error('Erro ao salvar like:', err);
     }

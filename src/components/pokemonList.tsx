@@ -11,9 +11,17 @@ type Props = {
   pokemons: Pokemon[];
   onEndReached?: () => void;
   loading?: boolean;
+  onRefresh?: () => void;
+  refreshing?: boolean;
 };
 
-export default function PokemonList({ pokemons = [], onEndReached, loading = false }: Props) {
+export default function PokemonList({
+  pokemons = [],
+  onEndReached,
+  loading = false,
+  onRefresh,
+  refreshing = false,
+}: Props) {
   const validPokemons = pokemons.filter((p) => p && p.id && p.name && p.sprites?.front_default);
 
   const uniquePokemons = Array.from(
@@ -27,6 +35,8 @@ export default function PokemonList({ pokemons = [], onEndReached, loading = fal
       renderItem={({ item }) => <PokemonCard pokemon={item} />}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.3}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       ListFooterComponent={
         loading ? <ActivityIndicator size="large" style={styles.loader} /> : <View style={styles.footerSpace} />
       }

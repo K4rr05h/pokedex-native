@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { View, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import PokemonDetails from '../src/components/pokemonDetails'
 import { theme } from '../src/theme/theme'
 import { registerForPushNotificationsAsync } from '../src/notifications/pushNotificationsRegistry';
-import { sendMockNotification } from '../src/notifications/sendMockNotification'
 
 export default function PokemonDetailsPage() {
   const { id } = useLocalSearchParams()
@@ -38,7 +37,6 @@ export default function PokemonDetailsPage() {
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.card }}>
       <PokemonDetails nameOrId={pokemonId} />
-      <TouchableOpacity onPress={sendMockNotification} style={{ backgroundColor: "red", width: 60, height: 60, borderRadius: 10, alignSelf: "center" }} />
     </View>
   )
 }
