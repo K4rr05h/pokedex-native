@@ -33,23 +33,13 @@ export default function PokemonDetailsPage() {
     loadLikeStatus()
   }, [pokemonId])
 
-  async function toggleLike() {
-    try {
-      const newStatus = !liked
-      setLiked(newStatus)
-      await AsyncStorage.setItem(`liked-${pokemonId}`, newStatus.toString())
-      Alert.alert(newStatus ? 'Curtido!' : 'Descurtido!')
-    } catch (err) {
-      console.error('Erro ao salvar like:', err)
-    }
-  }
-
   if (loading) return <ActivityIndicator size="large" style={{ marginTop: 50 }} />
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.card }}>
       <PokemonDetails nameOrId={pokemonId} />
-      <TouchableOpacity onPress={sendMockNotification}/>
+      <TouchableOpacity onPress={sendMockNotification} style={{ backgroundColor: "red", width: 10, height: 10, }}>
+      </TouchableOpacity>
     </View>
   )
 }

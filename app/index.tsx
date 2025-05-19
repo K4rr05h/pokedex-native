@@ -33,7 +33,11 @@ export default function HomePage() {
     <View style={{ flex: 1 }}>
       <SearchBar onSearch={setSearchTerm} />
       {loading && pokemons.length === 0 ? (
-        <ActivityIndicator size="large" style={{ marginTop: 50 }} />
+        <ActivityIndicator 
+          size="large"
+          style={{ marginTop: 50 }}
+          testID="ActivityIndicator"
+        />
       ) : searchResult?.length === 0 ? (
         <Text style={{ textAlign: 'center', marginTop: 30 }}>Nenhum Pokémon encontrado.</Text>
       ) : (
